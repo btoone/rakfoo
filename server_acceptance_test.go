@@ -9,6 +9,10 @@ import (
 Using curl command for an acceptance test.
 */
 func TestCurlRoot(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping test in short mode.")
+	}
+
 	// curl -i -X GET http://localhost:8080/
 	curl := exec.Command("curl", "-X", "GET", "http://localhost:8080/")
 	out, err := curl.Output()
