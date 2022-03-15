@@ -43,6 +43,10 @@ func (i *InMemoryFooList) SaveFoo(name string) Foo {
 	return foo
 }
 
+func (i *InMemoryFooList) DeleteFoo(id string) {
+	delete(i.items, id)
+}
+
 // Run using: `go run .`
 func main() {
 	fmt.Println("Starting server...")

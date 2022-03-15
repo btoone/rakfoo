@@ -168,6 +168,8 @@ func (s *StubFooList) SaveFoo(name string) Foo {
 	return foo
 }
 
+func (s *StubFooList) DeleteFoo(id string) {}
+
 /* Create a new list to stub with an error response */
 type StubFooListWithError struct{}
 
@@ -178,3 +180,5 @@ func (s *StubFooListWithError) FindFoo(id string) (Foo, error) {
 func (s *StubFooListWithError) SaveFoo(name string) Foo {
 	return Foo{"000", "With Error"}
 }
+
+func (s *StubFooListWithError) DeleteFoo(id string) {}

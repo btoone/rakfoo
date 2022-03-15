@@ -16,6 +16,7 @@ type Foo struct {
 type FooList interface {
 	FindFoo(id string) (Foo, error)
 	SaveFoo(name string) Foo
+	DeleteFoo(id string)
 }
 
 /*
@@ -40,6 +41,8 @@ func (f *FooServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		f.createFoo(w, r)
 	case http.MethodGet:
 		f.showFoo(w, r)
+	case http.MethodDelete:
+		f.deleteFoo(w, r)
 	}
 }
 
@@ -75,4 +78,18 @@ func (f *FooServer) createFoo(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(foo)
+}
+
+func (f *FooServer) deleteFoo(w http.ResponseWriter, r *http.Request) {
+	id := strings.TrimPrefix(r.URL.Path, "/foo/")
+	fmt.Printf("Debug: id = %q", id)
+
+	f.list.DeleteFoo(id)
+
+	// if err != nil {
+	// 	w.WriteHeader(http.StatusInternalServerError)
+	// 	return
+	// }
+
+	w.WriteHeader(http.StatusNoContent)
 }
